@@ -33,13 +33,13 @@
       paintVertLine({keyCode: 100})
 
 
-     function lineCreator(coordinateX, coordinateY, length, lineType) {
+     function lineCreator(coordinateX, coordinateY, length, lineType) { // функция, создающая вертикальную или горизонтальную линии
           let x = coordinateX;
           let y = coordinateY;
           const lineLength = length;
           const step = 25;
 
-          function buttonCase(e) {
+          function buttonCase(e) { // функция проверяет нажатую кнопку и меняет значение соответствующецй координаты на 25
 
             switch(e.keyCode){
              
@@ -58,40 +58,40 @@
             }
           }
 
-      if (lineType === 'horizontal') {
+      if (lineType === 'horizontal') { 
 
-        return function (e) {
+        return function (e) { // возвращается функцию, создающую горизонтальную линию
 
-            buttonCase(e)
+            buttonCase(e)  // проверяет какая кнопка была нажата и меняет координату
 
-            field.beginPath()
+            field.beginPath() 
 
-            if (e.keyCode === 38 || e.keyCode === 40) {
+            if (e.keyCode === 38 || e.keyCode === 40) { // при нажатии вверх или вниз происходит следующая логика
 
-              switch(true) {
+              switch(true) { // switch всегда срабатывает для последовательноц проверки кейсов
 
-              case (y < 0): 
+              case (y < 0): // если линия полностью ушла за канвас
                   y = canvas.height - y - step;
                   field.moveTo(x, y - lineLength) 
                   field.lineTo(x, y);
                   break; 
-              case (y < lineLength): 
+              case (y < lineLength): // если часть линии ушла за канвас
                   field.moveTo(x, 0); 
                   field.lineTo(x, y);
                   field.moveTo(x, canvas.height + y - lineLength); 
                   field.lineTo(x, canvas.height);
                   break; 
-              case (y < canvas.height): 
+              case (y < canvas.height): // если линия целиком в канвасе
                   field.moveTo(x, y - lineLength) 
                   field.lineTo(x, y);
                   break;
-              case (y > canvas.height && y < canvas.height + lineLength):
+              case (y > canvas.height && y < canvas.height + lineLength): // если часть линии ушла за канвас
                   field.moveTo(x, y - lineLength)
                   field.lineTo(x, canvas.height)
                   field.moveTo(x, 0)
                   field.lineTo(x, y-canvas.height)
                   break;
-              case (y > canvas.height + lineLength): 
+              case (y > canvas.height + lineLength): // если линия полностью ушла за канвас
                   y = y - canvas.height;
                   field.moveTo(x, y - lineLength) 
                   field.lineTo(x, y);
@@ -102,18 +102,18 @@
 
               switch(true) {
 
-              case (x < 0): 
+              case (x < 0): // если линия полностью ушла за канвас
                   x += canvas.width;
                   field.moveTo(x, y - lineLength); 
                   field.lineTo(x, y);
                   break;
 
-              case (x > 0 && x < canvas.width): 
+              case (x > 0 && x < canvas.width): // если линия целиком в канвасе
                   field.moveTo(x, y - lineLength); 
                   field.lineTo(x, y);
                   break; 
 
-              case (x > canvas.width):
+              case (x > canvas.width):// если линия полностью ушла за канвас
                   x -= canvas.width;
                   field.moveTo(x, y - lineLength); 
                   field.lineTo(x, y);
@@ -127,9 +127,9 @@
 
       }
      
-    if (lineType === 'vertical') {
+    if (lineType === 'vertical') { 
 
-        return function (e) {
+        return function (e) { // возвращается функцию, создающую вертикальную линию. Логика аналогична описанной выше. 
 
             buttonCase(e)
 
@@ -200,14 +200,14 @@
 
       function moveLogo(e) {
 
-        field.clearRect(0, 0, canvas.width, canvas.height)
-        paintHorLine1(e)
-        paintHorLine2(e)
-        paintVertLine(e)
+        field.clearRect(0, 0, canvas.width, canvas.height) // очищает канвас
+        paintHorLine1(e) // отрисовывает линию с учетом нажатия кнопки
+        paintHorLine2(e) // отрисовывает линию с учетом нажатия кнопки
+        paintVertLine(e) // отрисовывает линию с учетом нажатия кнопки
 
       }
     
-      addEventListener('keydown', moveLogo);
+      addEventListener('keydown', moveLogo); 
 
     </script>
   </body>
