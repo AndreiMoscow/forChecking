@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logomove</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <canvas
+      id="canvas"
+      width="800"
+      height="800"
+      style="border: 1px solid #d3d3d3; background: black;"
+    >
+    </canvas>
+
+    <script>
+      const canvas = document.querySelector('canvas')
+      const field = canvas.getContext('2d')
+
+      canvas.width = 400;
+      canvas.height = 400;
+
+      field.strokeStyle = 'white'
+      field.lineWidth = 16
+
+      let paintHorLine1 = lineCreator(120, 294, 150, 'horizontal');
+      let paintHorLine2 = lineCreator(280, 294, 150, 'horizontal');
+      let paintVertLine = lineCreator(250, 114, 100, 'vertical');
+      
+      paintHorLine1({keyCode: 100})
+      paintHorLine2({keyCode: 100})
+      paintVertLine({keyCode: 100})
+
+
+     function lineCreator(coordinateX, coordinateY, length, lineType) {
+          let x = coordinateX;
+          let y = coordinateY;
+          const lineLength = length;
+          const step = 25;
+
+          function buttonCase(e) {
+
+            switch(e.keyCode){
+             
+            case 37:  
+                x-= step;
+                break;
+            case 38:   
+                y-= step;
+                break;
+            case 39:   
+                x+= step;
+                break;
+            case 40:   
+                y+= step;
+                break;
+            }
+          }
+
+      if (lineType === 'horizontal') {
+
+        return function (e) {
+
+            buttonCase(e)
+
+            field.beginPath()
+
+            if (e.keyCode === 38 || e.keyCode === 40) {
+
+              switch(true) {
+
+              case (y < 0): 
+                  y = canvas.height - y - step;
+                  field.moveTo(x, y - lineLength) 
+                  field.lineTo(x, y);
+                  break; 
+              case (y < lineLength): 
+                  field.moveTo(x, 0); 
+                  field.lineTo(x, y);
+                  field.moveTo(x, canvas.height + y - lineLength); 
+                  field.lineTo(x, canvas.height);
+                  break; 
+              case (y < canvas.height): 
+                  field.moveTo(x, y - lineLength) 
+                  field.lineTo(x, y);
+                  break;
+              case (y > canvas.height && y < canvas.height + lineLength):
+                  field.moveTo(x, y - lineLength)
+                  field.lineTo(x, canvas.height)
+                  field.moveTo(x, 0)
+                  field.lineTo(x, y-canvas.height)
+                  break;
+              case (y > canvas.height + lineLength): 
+                  y = y - canvas.height;
+                  field.moveTo(x, y - lineLength) 
+                  field.lineTo(x, y);
+                  break; 
+              }
+
+          } else {
+
+              switch(true) {
+
+              case (x < 0): 
+                  x += canvas.width;
+                  field.moveTo(x, y - lineLength); 
+                  field.lineTo(x, y);
+                  break;
+
+              case (x > 0 && x < canvas.width): 
+                  field.moveTo(x, y - lineLength); 
+                  field.lineTo(x, y);
+                  break; 
+
+              case (x > canvas.width):
+                  x -= canvas.width;
+                  field.moveTo(x, y - lineLength); 
+                  field.lineTo(x, y);
+                  break;
+              }
+          }
+
+            field.stroke()
+
+          }
+
+      }
+     
+    if (lineType === 'vertical') {
+
+        return function (e) {
+
+            buttonCase(e)
+
+            field.beginPath()
+
+            if (e.keyCode === 38 || e.keyCode === 40) {
+
+              switch(true) {
+
+              case (y < 0): 
+                  y += canvas.height;
+                  field.moveTo(x - lineLength, y); 
+                  field.lineTo(x, y);
+                  break;
+
+              case (y > 0 && y < canvas.height): 
+                  field.moveTo(x - lineLength, y); 
+                  field.lineTo(x, y);
+                  break; 
+
+              case (y > canvas.height):
+                  y -= canvas.height;
+                  field.moveTo(x - lineLength, y); 
+                  field.lineTo(x, y);
+                  break;
+              }
+
+          } else {
+
+              switch(true) {
+
+              case (x < 0): 
+                  x = canvas.width - x - step*2;
+                  field.moveTo(x - lineLength, y) 
+                  field.lineTo(x, y);
+                  break; 
+              case (x < lineLength): 
+                  field.moveTo(0, y); 
+                  field.lineTo(x, y);
+                  field.moveTo(x + canvas.width - lineLength, y); 
+                  field.lineTo(canvas.width, y);
+                  break; 
+              case (x < canvas.width): 
+                  field.moveTo(x - lineLength, y) 
+                  field.lineTo(x, y);
+                  break;
+              case (x > canvas.width && x < canvas.width + lineLength):
+                  field.moveTo(x - lineLength, y)
+                  field.lineTo(canvas.width, y)
+                  field.moveTo(0, y)
+                  field.lineTo(x - canvas.width, y)
+                  break;
+              case (x > canvas.width + lineLength): 
+                  x = x - canvas.width;
+                  field.moveTo(x - lineLength, y) 
+                  field.lineTo(x, y);
+                  break; 
+              }
+          }
+
+            field.stroke()
+
+          }
+
+      }
+
+    } 
+
+      function moveLogo(e) {
+
+        field.clearRect(0, 0, canvas.width, canvas.height)
+        paintHorLine1(e)
+        paintHorLine2(e)
+        paintVertLine(e)
+
+      }
+    
+      addEventListener('keydown', moveLogo);
+
+    </script>
+  </body>
+</html>
