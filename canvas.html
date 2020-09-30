@@ -109,9 +109,25 @@
                   break;
 
               case (x > 0 && x < canvas.width): // если линия целиком в канвасе
-                  field.moveTo(x, y - lineLength); 
-                  field.lineTo(x, y);
-                  break; 
+                  if (y < lineLength) { // если часть линии ушла за канвас
+                    field.moveTo(x, 0); 
+                    field.lineTo(x, y);
+                    field.moveTo(x, canvas.height + y - lineLength); 
+                    field.lineTo(x, canvas.height);
+                    break;
+                  }
+                  
+                  if (y > canvas.height && y < canvas.height + lineLength) { // если часть линии ушла за канвас
+                    field.moveTo(x, y - lineLength)
+                    field.lineTo(x, canvas.height)
+                    field.moveTo(x, 0)
+                    field.lineTo(x, y-canvas.height)
+                    break;
+                    }
+                    
+                    field.moveTo(x, y - lineLength); 
+                    field.lineTo(x, y);
+                    break;
 
               case (x > canvas.width):// если линия полностью ушла за канвас
                   x -= canvas.width;
@@ -145,7 +161,22 @@
                   field.lineTo(x, y);
                   break;
 
-              case (y > 0 && y < canvas.height): 
+              case (y > 0 && y < canvas.height):
+                  if (x < lineLength) { 
+                    field.moveTo(0, y); 
+                    field.lineTo(x, y);
+                    field.moveTo(x + canvas.width - lineLength, y); 
+                    field.lineTo(canvas.width, y);
+                    break; 
+                  }
+                  if (x > canvas.width && x < canvas.width + lineLength) {
+                    field.moveTo(x - lineLength, y)
+                    field.lineTo(canvas.width, y)
+                    field.moveTo(0, y)
+                    field.lineTo(x - canvas.width, y)
+                    break; 
+                    }
+
                   field.moveTo(x - lineLength, y); 
                   field.lineTo(x, y);
                   break; 
@@ -176,7 +207,7 @@
                   field.moveTo(x - lineLength, y) 
                   field.lineTo(x, y);
                   break;
-              case (x > canvas.width && x < canvas.width + lineLength):
+              case (x >= canvas.width && x <= canvas.width + lineLength):
                   field.moveTo(x - lineLength, y)
                   field.lineTo(canvas.width, y)
                   field.moveTo(0, y)
