@@ -87,13 +87,11 @@
         return function (e) { // возвращается функцию, создающую горизонтальную линию
 
             buttonCase(e)  // проверяет какая кнопка была нажата и меняет координату
-
             field.beginPath() 
 
             if (e.keyCode === 38 || e.keyCode === 40) { // при нажатии вверх или вниз происходит следующая логика
 
               switch(true) { // switch всегда срабатывает для последовательноц проверки кейсов
-
               case (y < 0): // если линия полностью ушла за канвас
                   y = canvas.height - y - step;
                   paintNormalVertLine();
@@ -104,7 +102,6 @@
               case (y < canvas.height): // если линия целиком в канвасе
                   paintNormalVertLine();
                   break;
-    
               case (y > canvas.height): // если часть линии ушла за канвас
                   y -= canvas.height;
                   paintSeparateVertLine();
@@ -117,17 +114,14 @@
 
               case (x < 0): // если линия полностью ушла за канвас
                   x += canvas.width;
-
                   if (y < lineLength) { // если часть линии ушла за канвас
                     paintSeparateVertLine();
                     break;
                   }
-
                   if (y > canvas.height) { // если часть линии ушла за канвас
                   y -= canvas.height;
                   paintSeparateVertLine();
                   }
-
                   paintNormalVertLine();
                   break;
 
@@ -137,12 +131,10 @@
                     paintSeparateVertLine();
                     break;
                   }
-
                 if (y > canvas.height) { // если часть линии ушла за канвас
                   y -= canvas.height;
                   paintSeparateVertLine();
                   }
-
                   paintNormalVertLine();
                   break;
 
@@ -153,21 +145,16 @@
                     paintSeparateVertLine();
                     break;
                   }
-
                   if (y > canvas.height) { // если часть линии ушла за канвас
                   y -= canvas.height;
                   paintSeparateVertLine();
                   }
-
                   paintNormalVertLine();
                   break;
               }
           }
-
             field.stroke()
-
           }
-
       }
      
     if (lineType === 'horizontal') { 
@@ -175,7 +162,6 @@
         return function (e) { // возвращается функцию, создающую вертикальную линию. Логика аналогична описанной выше. 
 
             buttonCase(e)
-
             field.beginPath()
 
             if (e.keyCode === 38 || e.keyCode === 40) {
@@ -183,8 +169,7 @@
               switch(true) {
 
               case (y < 0): 
-                  y += canvas.height;
-                  
+                  y += canvas.height;                
                   if (x < lineLength) { 
                     paintSeparateHorLine();
                     break; 
@@ -195,7 +180,6 @@
                     paintSeparateHorLine();
                     break; 
                     }
-
                   paintNormalHorLine();
                   break; 
 
@@ -204,13 +188,11 @@
                     paintSeparateHorLine();
                     break; 
                   }
-                  if (x >= canvas.width) {
-                   
+                  if (x >= canvas.width) {    
                     x -= canvas.width;
                     paintSeparateHorLine();
                     break; 
                     }
-
                   paintNormalHorLine();
                   break; 
 
@@ -227,15 +209,12 @@
                     paintSeparateHorLine();
                     break; 
                     }
-
                   paintNormalHorLine();
                   break; 
               }
-
           } else {
 
               switch(true) {
-
               case (x < 0): 
                   x = canvas.width - x - step*2;
                   paintNormalHorLine();
@@ -246,20 +225,16 @@
               case (x < canvas.width): 
                   paintNormalHorLine();
                   break;
-              case (x >= canvas.width):
-                 
+              case (x >= canvas.width):         
                   x -= canvas.width;
                     paintSeparateHorLine();
                   break;
               }
           }
-
             field.stroke()
 
           }
-
       }
-
     } 
 
       function moveLogo(e) {
@@ -268,7 +243,6 @@
         paintVertLine1(e) // отрисовывает линию с учетом нажатия кнопки
         paintVertLine2(e) // отрисовывает линию с учетом нажатия кнопки
         paintHorLine(e) // отрисовывает линию с учетом нажатия кнопки
-
       }
     
       addEventListener('keydown', moveLogo); 
